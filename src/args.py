@@ -12,6 +12,8 @@ def parse_args():
     parser.add_argument("--hidden", type=int, default=36, help="hiddensize of lstm")
     parser.add_argument("--trainsize", type=int, default=8, help="size of training set")
     parser.add_argument("--layers", type=int, default=4, help="layer sizes of lstm")
+    parser.add_argument("--width", type=int, default=64, help="width of BIN")
+
 
 
 

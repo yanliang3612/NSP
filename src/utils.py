@@ -4,6 +4,9 @@ import random
 import numpy as np
 import torch
 import statistics
+import torch.nn.functional as F
+
+
 
 
 
@@ -27,3 +30,11 @@ def summary(loss,repetitions):
     log = 'test_loss_mean:{:.2f}, test_loss_std:{:.2f}'.format(test_loss_mean, test_loss_std)
     return log
 
+
+
+
+
+def full_mse_loss(pred, label):
+    loss = F.mse_loss(pred, label, size_average=False)
+    loss = loss / pred.size(1) / pred.size(0)
+    return loss
