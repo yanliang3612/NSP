@@ -30,19 +30,19 @@ def main():
         train_x, train_y, test_x, test_y = train_x.to(device), train_y.to(device), test_x.to(device), test_y.to(device)
         input_size_num = data_x.shape[1]
         output_size_num = 1
-        lstm_model = CNNRNN().to(device)
-        print('LSTM model:', lstm_model)
-        print('model.parameters:', lstm_model.parameters)
+        CNNRNN_model = CNNRNN().to(device)
+        print('CNNRNN model:', CNNRNN_model)
+        print('model.parameters:', CNNRNN_model.parameters)
         print('train x tensor dimension:', Variable(train_x).size())
 
         # optimizer
         criterion = nn.MSELoss()
-        optimizer = torch.optim.Adam(lstm_model.parameters(), lr=args.lr)
+        optimizer = torch.optim.Adam(CNNRNN_model.parameters(), lr=args.lr)
 
         prev_loss = 1000
 
         for epoch in range(args.epochs):
-            output = lstm_model(train_x).to(device)
+            output = CNNRNN_model(train_x).to(device)
             loss = criterion(output, train_y)
 
             optimizer.zero_grad()
@@ -50,7 +50,7 @@ def main():
             optimizer.step()
 
             if loss < prev_loss:
-                torch.save(lstm_model.state_dict(), 'lstm_model.pt')  # save model parameters to files
+                torch.save(CNNRNN_model.state_dict(), 'CNNRNN_model.pt')  # save model parameters to files
                 prev_loss = loss
 
             if loss.item() < 1e-4:
@@ -63,12 +63,12 @@ def main():
 
         # ----------------- test -------------------
 
-        lstm_model = lstm_model.eval()  # switch to testing model
+        lstm_model = CNNRNN_model.eval()  # switch to testing model
 
         # prediction on test dataset
 
 
-        output_test = lstm_model(test_x).to(device)
+        output_test = CNNRNN_model(test_x).to(device)
         test_loss = criterion(output_test,test_y )
         # print("test loss：", test_loss.item())
         test_loss_list.append(test_loss.item())
