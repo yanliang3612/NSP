@@ -19,7 +19,7 @@ class LstmRNN(nn.Module):
         super().__init__()
 
         self.lstm = nn.LSTM(input_size, hidden_size, num_layers)  # utilize the LSTM model in torch.nn
-        self.linear1 = nn.Linear(hidden_size, output_size)  # 全连接层
+        self.linear1 = nn.Linear(hidden_size, output_size)  
 
     def forward(self, _x):
         x, _ = self.lstm(_x)  # _x is input, size (seq_len, batch, input_size)
