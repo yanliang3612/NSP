@@ -24,17 +24,25 @@ def set_random_seeds(random_seed=0):
 
 
 
-def summary(loss,repetitions):
-    test_loss_mean = statistics.mean(loss)
-    test_loss_std = (statistics.stdev(loss) / (repetitions ** (1 / 2)))
-    log = 'test_loss_mean:{:.2f}, test_loss_std:{:.2f}'.format(test_loss_mean, test_loss_std)
+def summary_mse(loss,repetitions,testsize):
+    test_loss_mean = statistics.mean(loss)/testsize
+    test_loss_std = ((statistics.stdev(loss) / (repetitions ** (1 / 2))))/testsize
+    log = 'test_mse_loss_mean:{:.2f}, test_mse_loss_std:{:.2f}'.format(test_loss_mean, test_loss_std)
     return log
 
 
 
 
+def summary_mae(loss,repetitions,testsize):
+    test_loss_mean = statistics.mean(loss)/testsize
+    test_loss_std = ((statistics.stdev(loss) / (repetitions ** (1 / 2))))/testsize
+    log = 'test_mae_loss_mean:{:.2f}, test_mae_loss_std:{:.2f}'.format(test_loss_mean, test_loss_std)
+    return log
+
+
+
 
 def full_mse_loss(pred, label):
-    loss = F.mse_loss(pred, label, size_average=False)
-    loss = loss / pred.size(1) / pred.size(0)
-    return loss
+    import torch.nn as nn
+    loss =  nn.MSELoss()
+
